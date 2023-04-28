@@ -18,7 +18,7 @@ ini_set("mysqli.default_port", '');
             <h1 class="text-center bg-danger text-white rounded-3">CRUD in PHP</h1>
             <div class="mb-3 col-12">
                 <label for="img" class="form-label">Image: </label>
-                <input type="file" class="form-control" name="img[]" id="img">
+                <input type="file" class="form-control" name="img" id="img">
             </div>
             <div class="mb-3 col-12">
                 <label for="product_name" class="form-label">Product name: </label>
@@ -54,19 +54,50 @@ ini_set("mysqli.default_port", '');
                     url: "./action/data.php",
                     method: "GET",
                     success: (res) => {
-                        console.log(res);
-                        // res = JSON.parse(res);
-                        // data = "";
-                        // Object.entries(res).forEach(([key, data]) => {
-                        //     data += `<td>${data["id"]}</td><td>`;
-                        //     data["photo"].forEach((value, index) => {
-                        //         data += `<img src='${value}' alt='Product image'/>`;
-                        //     })
-                        //     data += '</td>';
-                        //     data += `<td>${data['product_name']}`;
-                        //     data += `<td>${data['product_price']}</td>`;
-                        // });
-                        // $("#table-data").html(data);
+                        $("#table-data").html(res);
+                    },
+                    error: (err) => {
+                        console.log(err);
+                    }
+                })
+            }
+
+            const addData = () => {
+                const reader = new FileReader();
+                reader.onload = (() => {
+                    $.ajax({
+                        url: "./action/data.php",
+                        method: "POST",
+                        processData: false,
+                        contentType: false,
+                        data: {
+                            name: $("#product_name").val(),
+                            image: reader.result,
+                            price: $("#price").val(),
+                            submit: true
+                        },
+                        success: (res) => {
+                            getData();
+                        },
+                        error: (err) => {
+                            console.log(err);
+                        }
+                    })
+                });
+
+                reader.readAsDataURL($("#img").val());
+            }
+
+            const deleteData = (id) => {
+                $.ajax({
+                    url: "./action/data.php",
+                    method: "POST",
+                    data: {
+                        id: id,
+                        delete: true
+                    },
+                    success: (res) => {
+                        getData();
                     },
                     error: (err) => {
                         console.log(err);

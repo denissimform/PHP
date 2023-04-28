@@ -9,5 +9,13 @@ $stmt = $conn->prepare($sql);
 $stmt->execute();
 
 $res = $stmt->get_result();
+$output = "";
+foreach ($res as $index => $data) {
+    $output = "<tr><td>" . $data['id'] . "</td>
+    <td><img src='" . $data['image'] . "' alt='Product image'/></td>
+    <td>" . $data['product_name'] . "</td>
+    <td>" . $data['product_price'] . "</td>
+    <td><button class='btn btn-danger' onclick='deleteData(" . $data['id'] . ")'></button></td></tr>";
+}
 
-print_r($res->fetch_array());
+echo $output;
