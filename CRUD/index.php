@@ -1,10 +1,3 @@
-<?php
-ini_set("display_errors", 1);
-ini_set("display_startup_errors", 1);
-error_log(E_ALL);
-ini_set("mysqli.default_port", '');
-?>
-
 <html>
 
 <head>
@@ -22,25 +15,22 @@ ini_set("mysqli.default_port", '');
                 <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
             </div>
             <h1 class="text-center bg-danger text-white rounded-3">CRUD in PHP</h1>
-            <div class="mb-3 col-12 d-flex justify-content-center">
-                <input type="hidden" class="form-control d-none" name="product_id" id="product_id">
-                <img width='100' alt='Product image' class="d-none" id='preview-img' />
+            <div class="mb-3 col-12 d-flex justify-content-center" id="preview-img-body">
             </div>
             <div class=" mb-3 col-12">
                 <label for="img" class="form-label">Image: </label>
-                <input type="file" class="form-control" name="img" id="img">
+                <input type="file" class="form-control" name="img" id="img" multiple required>
             </div>
             <div class="mb-3 col-12">
                 <label for="product_name" class="form-label">Product name: </label>
-                <input type="text" class="form-control" name="product_name" id="product_name">
+                <input type="text" class="form-control" name="product_name" id="product_name" required>
             </div>
             <div class="mb-3 col-12">
                 <label for="price" class="form-label">Price: </label>
-                <input type="number" class="form-control" name="price" id="price">
+                <input type="number" class="form-control" name="price" id="price" required>
             </div>
             <div class="col-12">
                 <input type="submit" name="submit" value="submit" id="submit" class="btn btn-success w-100">
-                <input type="submit" name="update" value="update" id="update" class="d-none btn btn-danger w-100">
                 <input type="reset" name="reset" value="reset" id="reset" class="btn btn-primary w-100" hidden>
             </div>
         </form>
@@ -58,95 +48,20 @@ ini_set("mysqli.default_port", '');
             <tbody id="table-data"></tbody>
         </table>
     </div>
-
+    <div class="modal fade" id="updateModal" tabindex="-1" aria-labelledby="updateModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content" id="modal-body">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateModalLabel">Update product details</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="closeBtn()"></button>
+                </div>
+            </div>
+        </div>
+    </div>
     <script src="../src/bootstrap.bundle.min.js"></script>
     <script src="../src/jquery-3.6.4.min.js"></script>
 
-    <script>
-        const changeImage = (event) => {
-            const reader = new FileReader();
-
-            reader.onload = () => {
-                $("#preview-img").removeClass("d-none").attr("src", reader.result);
-            }
-
-            reader.readAsDataURL(event.target.files[0]);
-        }
-        $("#img").change(changeImage);
-
-        const getData = () => {
-            $.ajax({
-                url: "./action/data.php",
-                method: "GET",
-                success: (res) => {
-                    $("#reset").click();
-                    $("#table-data").html(res);
-                    $("#preview-img").attr("src", "").addClass("d-none");
-                },
-                error: (err) => {
-                    console.log(err);
-                }
-            })
-        }
-        getData();
-
-        const updateData = (id) => {
-            $("#product_id").removeClass("d-none").val(id);
-            $("#submit").addClass("d-none");
-            $("#update").removeClass("d-none");
-            $("#preview-img").removeClass("d-none").attr("src", $("#img" + id).attr("src"));
-            $("#product_name").removeClass("d-none").val($("#name" + id).html());
-            $("#price").removeClass("d-none").val($("#price" + id).html());
-        }
-
-        const deleteData = (id) => {
-            $.ajax({
-                url: "./action/setData.php",
-                method: "POST",
-                data: {
-                    id: id,
-                    delete: true
-                },
-                success: (res) => {
-                    getData();
-                },
-                error: (err) => {
-                    console.log(err);
-                }
-            })
-        }
-
-        const addData = (event) => {
-            event.preventDefault();
-            const fileData = new FormData(event.target);
-            fileData.append($("#submit").hasClass("d-none") ? 'update' : 'submit', true);
-            $.ajax({
-                url: "./action/setData.php",
-                method: "POST",
-                contentType: false,
-                processData: false,
-                data: fileData,
-                success: (res) => {
-                    res = JSON.parse(res);
-                    if (res.success) {
-                        $("#error").addClass("d-none");
-                        $("#success").removeClass("d-none").prepend(res.message);
-                        getData();
-                    } else {
-                        $("#success").addClass("d-none");
-                        $("#error").removeClass("d-none").prepend(res.message);
-                    }
-                },
-                error: (err) => {
-                    console.log(err);
-                }
-            })
-
-            $("#submit").removeClass("d-none");
-            $("#update").addClass("d-none");
-        }
-        $('#form').submit(addData);
-    </script>
+    <script src="./JS/index.js"></script>
 </body>
 
 </html>

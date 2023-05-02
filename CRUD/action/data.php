@@ -1,8 +1,6 @@
 <?php
-ini_set("display_errors", 1);
-ini_set("display_startup_errors", 1);
-error_log(E_ALL);
-$conn = new mysqli("localhost", "denis", "Root@123", "PHP") or die("Somthing went wrong during connection with database!!");
+
+require_once("./conf.php");
 
 $sql = "select * from product";
 $stmt = $conn->prepare($sql);
@@ -18,7 +16,7 @@ if ($res->num_rows > 0) {
         <td id='name" . $data['id'] . "'>" . $data['name'] . "</td>
         <td id='price" . $data['id'] . "'>" . $data['price'] . "</td>
         <td><button class='btn btn-danger' onclick='deleteData(" . $data['id'] . ")'>Delete</button></td>
-        <td><button class='btn btn-success' onclick='updateData(" . $data['id'] . ")'>Update</button></td></tr>";
+        <td><button class='btn btn-success' onclick='updateData(" . $data['id'] . ")' data-bs-toggle='modal' data-bs-target='#updateModal'>Update</button></td></tr>";
     }
 } else {
     $output = "<tr><td colspan='5' class='text-center'>No data found!!</td></tr>";
