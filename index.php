@@ -100,3 +100,11 @@
 // }
 
 echo "<h1> Welcome! To PHP. </h1>";
+echo "<pre>";
+
+$conn = new mysqli("localhost", "denis", "Denis@123", "PHP");
+print_r($conn->get_client_info());
+echo "<br>";
+print_r($conn->client_version);
+// print_r($conn->get_connection_stats());
+echo $conn->host_info;
