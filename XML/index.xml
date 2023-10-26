@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Person info="Information">
+    <Name man_no="66">Denis</Name>
+    <FamilyBackground>
+        <FatherName>Harsukhbhai</FatherName>
+        <MotherName>Pragnaben</MotherName>
+        <BrotherName>Yash</BrotherName>
+    </FamilyBackground>
+    <Education>
+        <Name course="SSC">Shishu vihar vidhyalaya</Name>
+        <Name course="HSC">T. and T.V. high school</Name>
+        <Name course="BE">Vishwakarma government engineering college</Name>
+    </Education>
+</Person>

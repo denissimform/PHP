@@ -99,12 +99,20 @@
 //     echo $a;
 // }
 
-echo "<h1> Welcome! To PHP. </h1>";
-echo "<pre>";
+echo "<h1> Welcome! To The PHP. </h1>";
+echo "<h4>Hii, This is Denis Shingala...</h4>";
 
-$conn = new mysqli("localhost", "denis", "Denis@123", "PHP");
-print_r($conn->get_client_info());
-echo "<br>";
-print_r($conn->client_version);
-// print_r($conn->get_connection_stats());
-echo $conn->host_info;
+// print_r($_SERVER);
+
+// print_r($_GET);
+// print_r($_POST);
+
+// $err = ["name" => "Denis", "surname" => "Shingala"];
+// $json = json_encode($err);
+// echo $json;
+
+// print_r(json_decode($json));
+
+echo "<a href='/'>link</a>";
+
+echo "";

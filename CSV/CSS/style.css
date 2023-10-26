@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+* {
+    font-family: 'Roboto', sans-serif;
+}
+
+.btn {
+    box-shadow: none !important;
+}
+
+.nav-link {
+    color: black !important;
+}
